@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Escolar • xsmanzz</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Canvas dos Flocos de Neve (Estilo guns.lol) -->
+    <canvas id="snowCanvas"></canvas>
+
+    <!-- Parallax Glow Background -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+    <div class="bg-grid"></div>
+
+    <!-- Header Glassmorphic Fixo -->
+    <header class="glass-header">
+        <div class="header-container">
+            <div class="logo stumble-bounce">
+                <i class="fa-solid fa-graduation-cap glow-icon"></i>
+                <span>Edu<strong>Pulse</strong></span>
+                <span class="badge">Bertoni</span>
+            </div>
+            
+            <nav class="nav-links">
+                <a href="#sobre" class="nav-item stumble-bounce active"><i class="fa-regular fa-user"></i> Sobre Mim</a>
+                <a href="#horarios" class="nav-item stumble-bounce"><i class="fa-regular fa-clock"></i> Horários</a>
+                <a href="#tarefas" class="nav-item stumble-bounce"><i class="fa-regular fa-calendar-check"></i> Tarefas</a>
+                <a href="#notas" class="nav-item stumble-bounce"><i class="fa-solid fa-calculator"></i> Notas</a>
+                <a href="#pomodoro" class="nav-item stumble-bounce"><i class="fa-solid fa-stopwatch"></i> Foco</a>
+            </nav>
+
+            <div class="user-pill stumble-bounce">
+                <div class="avatar">8A</div>
+                <span>xsmanzz</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+
+        <!-- Hero Section -->
+        <section class="hero reveal">
+            <div class="hero-text">
+                <span class="pill-tag stumble-bounce"><i class="fa-solid fa-sparkles"></i> Bertoni International School • 8º Ano</span>
+                <h1>Sua rotina escolar com <span class="gradient-text">design & inteligência.</span></h1>
+                <p>Acompanhe horários, prazos, notas e tempo de estudo em uma interface fluida e moderna.</p>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-card glass-card stumble-bounce">
+                    <i class="fa-solid fa-book-open"></i>
+                    <div>
+                        <span class="stat-num">7</span>
+                        <span class="stat-label">Aulas Hoje</span>
+                    </div>
+                </div>
+                <div class="stat-card glass-card stumble-bounce">
+                    <i class="fa-solid fa-list-check"></i>
+                    <div>
+                        <span class="stat-num" id="pendingTasksCount">2</span>
+                        <span class="stat-label">Tarefas Pendentes</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção: Sobre Mim -->
+        <section id="sobre" class="section-container reveal">
+            <div class="section-header">
+                <h2><i class="fa-regular fa-user"></i> Sobre Mim</h2>
+            </div>
+            <div class="glass-card profile-card stumble-bounce">
+                <div class="profile-avatar">
+                    <i class="fa-solid fa-user-astronaut"></i>
+                </div>
+                <div class="profile-details">
+                    <h3>xsmanzz <i class="fa-solid fa-circle-check verified-icon" title="Verificado"></i></h3>
+                    <p class="school-name"><i class="fa-solid fa-school"></i> Bertoni International School</p>
+                    <div class="profile-tags">
+                        <span class="tag-item stumble-bounce"><i class="fa-brands fa-discord"></i> Discord: <strong>xsman9</strong></span>
+                        <span class="tag-item stumble-bounce"><i class="fa-solid fa-graduation-cap"></i> Turma: <strong>8º Ano</strong></span>
+                        <span class="tag-item stumble-bounce"><i class="fa-solid fa-code"></i> Student Developer</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Horários da Aula -->
+        <section id="horarios" class="section-container reveal">
+            <div class="section-header">
+                <h2><i class="fa-regular fa-clock"></i> Grade de Aulas (8º Ano)</h2>
+                <div class="day-selector">
+                    <button class="day-btn stumble-bounce active" onclick="setDay('seg')">Seg</button>
+                    <button class="day-btn stumble-bounce" onclick="setDay('ter')">Ter</button>
+                    <button class="day-btn stumble-bounce" onclick="setDay('qua')">Qua</button>
+                    <button class="day-btn stumble-bounce" onclick="setDay('qui')">Qui</button>
+                    <button class="day-btn stumble-bounce" onclick="setDay('sex')">Sex</button>
+                </div>
+            </div>
+
+            <div class="schedule-grid" id="scheduleGrid">
+                <!-- Inserido dinamicamente pelo JS -->
+            </div>
+        </section>
+
+        <!-- Grid de Duas Colunas: Tarefas & Pomodoro -->
+        <div class="two-column-grid">
+
+            <!-- Seção de Tarefas e Trabalhos -->
+            <section id="tarefas" class="section-container reveal">
+                <div class="section-header">
+                    <h2><i class="fa-regular fa-calendar-check"></i> Trabalhos & Tarefas</h2>
+                </div>
+                
+                <div class="glass-card inner-card">
+                    <form id="taskForm" class="task-input-group">
+                        <input type="text" id="taskInput" placeholder="Ex: Pesquisa de Geografia..." required>
+                        <select id="taskSubject">
+                            <option value="Matemática">Matemática</option>
+                            <option value="Português">Português</option>
+                            <option value="Ciências">Ciências</option>
+                            <option value="História">História</option>
+                            <option value="Geografia">Geografia</option>
+                            <option value="Inglês">Inglês</option>
+                        </select>
+                        <button type="submit" class="btn-primary stumble-btn"><i class="fa-solid fa-plus"></i> Add</button>
+                    </form>
+
+                    <ul class="task-list" id="taskList">
+                        <!-- Itens das tarefas -->
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Seção Pomodoro de Estudos -->
+            <section id="pomodoro" class="section-container reveal">
+                <div class="section-header">
+                    <h2><i class="fa-solid fa-stopwatch"></i> Timer de Foco</h2>
+                </div>
+
+                <div class="glass-card inner-card pomodoro-card">
+                    <div class="timer-display" id="timerDisplay">25:00</div>
+                    <div class="timer-modes">
+                        <button class="mode-btn stumble-bounce active" onclick="setTimerMode(25, this)">Foco (25m)</button>
+                        <button class="mode-btn stumble-bounce" onclick="setTimerMode(5, this)">Pausa (5m)</button>
+                    </div>
+                    <div class="timer-controls">
+                        <button id="startTimerBtn" class="btn-primary stumble-btn" onclick="toggleTimer()">
+                            <i class="fa-solid fa-play"></i> Iniciar
+                        </button>
+                        <button class="btn-secondary stumble-btn" onclick="resetTimer()">
+                            <i class="fa-solid fa-rotate-right"></i> Resetar
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Seção de Notas e Médias -->
+        <section id="notas" class="section-container reveal">
+            <div class="section-header">
+                <h2><i class="fa-solid fa-calculator"></i> Calculadora de Médias</h2>
+            </div>
+
+            <div class="glass-card inner-card">
+                <div class="grades-grid">
+                    <div class="grade-input-box">
+                        <label>1º Bimestre</label>
+                        <input type="number" id="b1" min="0" max="10" step="0.1" placeholder="0.0">
+                    </div>
+                    <div class="grade-input-box">
+                        <label>2º Bimestre</label>
+                        <input type="number" id="b2" min="0" max="10" step="0.1" placeholder="0.0">
+                    </div>
+                    <div class="grade-input-box">
+                        <label>3º Bimestre</label>
+                        <input type="number" id="b3" min="0" max="10" step="0.1" placeholder="0.0">
+                    </div>
+                    <div class="grade-input-box">
+                        <label>4º Bimestre</label>
+                        <input type="number" id="b4" min="0" max="10" step="0.1" placeholder="0.0">
+                    </div>
+                </div>
+
+                <div class="grade-result-bar">
+                    <button class="btn-primary stumble-btn" onclick="calcularMedia()">Calcular Média</button>
+                    <div class="result-display">
+                        <span>Média Final: <strong id="finalAverage">--</strong></span>
+                        <span id="statusBadge" class="status-badge">Aguardando</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Desenvolvido por <strong>xsmanzz</strong> • Bertoni International School</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
